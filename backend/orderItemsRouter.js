@@ -38,7 +38,7 @@ router.get('/:orderItemId', (req, res) => {
 
 // Create a new order item
 router.post('/', (req, res) => {
-    const { order_id, product_name, quantity, price_per_unit } = req.body;
+    const { customer_order_id, product_name, quantity, price_per_unit } = req.body;
     const sql = 'INSERT INTO orderitems (customer_order_id, product_name, quantity, price_per_unit) VALUES (?, ?, ?, ?)';
     db.query(sql, [customer_order_id, product_name, quantity, price_per_unit], (err, result) => {
       if (err) {
