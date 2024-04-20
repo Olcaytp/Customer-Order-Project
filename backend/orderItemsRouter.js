@@ -45,7 +45,14 @@ router.post('/', (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
         throw err;
       }
-      res.json({ message: 'Order item added successfully', orderItemId: result.insertId });
+      res.json({
+        message: 'Order item added successfully',
+        orderItemId: result.insertId,
+        product_name: product_name,
+        quantity: quantity,
+        price_per_unit: price_per_unit
+      });
+      
     });
 });
 

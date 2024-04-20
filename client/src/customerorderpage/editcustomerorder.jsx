@@ -94,7 +94,6 @@ const EditCustomerOrder = () => {
             </div>
             <button type="submit" className="mt-4 bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600">Update Customer Order</button>
           </form>
-
           {/* Sipariş öğeleri tablosu */}
           <h2 className="text-2xl font-bold mt-8">Order Items</h2>
           <table className="w-full border-collapse border border-gray-200">

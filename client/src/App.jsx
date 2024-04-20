@@ -5,6 +5,7 @@ import EditCustomerOrder from "./customerorderpage/editcustomerorder";
 import ListOrderItems from "./orderitemspage/listorderitems";
 import EditOrderItem from "./orderitemspage/editorderitem";
 import AddCustomerOrder from "./customerorderpage/addCustomerOrder";
+import AddOrderItem from "./orderitemspage/AddOrderItem";
 
 import './App.css'
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/edit/:customerOrderId" element={<EditCustomerOrder />} /> {/* customerId parametresi için dinamik yol */}
         <Route path="/orderitems" element={<ListOrderItems />} />
         <Route path="/editorderitem/:orderItemId" element={<EditOrderItem />} />
+        <Route path="/editorderitem/add/:customerOrderId" element={<AddOrderItem />} />
         </Routes>
     </BrowserRouter>
     </div>

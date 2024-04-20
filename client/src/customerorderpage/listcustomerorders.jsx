@@ -69,7 +69,6 @@ const ListCustomerOrder = () => {
             <th className="border border-gray-200 px-4 py-2">Address</th>
             <th className="border border-gray-200 px-4 py-2">Order Date</th>
             <th className="border border-gray-200 px-4 py-2">Actions</th>{" "}
-            {/* Yeni sütun ekle */}
           </tr>
         </thead>
         <tbody>
@@ -88,15 +87,12 @@ const ListCustomerOrder = () => {
                 {customerorder.order_date}
               </td>
               <td className="border border-gray-200 px-4 py-2">
-                {/* Edit butonu */}
                 <button className="border-gray-200 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2 mb-2">
                 <Link to={`/edit/${customerorder.customer_order_id}`}>Edit</Link>
                 </button>
-                {/* Delete butonu */}
                 <button onClick={() => handleDelete(customerorder.customer_order_id)} className="border-gray-200 hover:bg-red-500 text-white font-bold py-1 px-2 rounded mb-2">
                   <Link>Delete</Link>
                 </button>
-                {/* View butonu */}
                 <button className="border-gray-200 hover:bg-red-500 text-white font-bold py-1 px-2 rounded">
                 <Link
                   to={`/customerorder/viewdetails/${customerorder.customer_order_id}`} // View butonuna tıklandığında ilgili URL'ye yönlendir
@@ -109,7 +105,6 @@ const ListCustomerOrder = () => {
           ))}
         </tbody>
       </table>
-      {/* Add butonu */}
       <button className=" text-white font-bold py-1 px-2 rounded mt-5">
       <Link to="/customerOrders/add" className="bg-green-500 text-white font-bold py-2 px-4 rounded">
         Add Customer Order

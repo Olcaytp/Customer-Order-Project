@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // useParams hook'unu içe aktar
 import { PDFViewer, Document, Page, Text, View, StyleSheet, PDFDownloadLink  } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
@@ -55,12 +56,44 @@ const ViewDetails = () => {
     
     fetchCustomerOrderDetails();
   }, [customerOrderId]); // customerOrderId dependency array içine eklendi
+
+  const handleRemoveItem = async (itemId) => {
+    try {
+      const isConfirmed = window.confirm("Are you sure you want to remove this item?");
+      if (isConfirmed) {
+        // Öğeyi kaldırma isteği gönder
+        await axios.delete(`http://localhost:8080/orderItems/${itemId}`);
+        // Başarı durumunu işle veya bir güncelleme yap
+        console.log('Item removed successfully:', itemId);
+        // Kaldırılan öğeyi yenilemek için sipariş öğelerini güncelle
+        setOrderItems(orderItems.filter(item => item.order_item_id !== itemId));
+      }
+    } catch (error) {
+      console.error('Error removing item:', error);
+    }
+  };  
   
   
   return (
     <div className="container mx-auto px-4 py-8">
       {customerOrder.customer_name ? (
         <div>
+        <div>
+          <header className="bg-gray-800 text-white py-4">
+            <div className="container mx-auto flex justify-center items-center px-4">
+              <nav>
+                <ul className="flex space-x-4">
+                  <li>
+                    <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </header>
+        </div>
           <h2 className="text-2xl font-bold mb-4">Customer Order Details </h2>
           <table className="w-full border-collapse border border-gray-200">
             <thead>
@@ -80,15 +113,21 @@ const ViewDetails = () => {
               </tr>
             </tbody>
           </table>
-
-          {/* Sipariş öğeleri tablosu */}
           <h2 className="text-2xl font-bold mt-8">Order Items</h2>
+          <div className="flex justify-end">
+          <div className="flex justify-end">
+            <Link to={`/editorderitem/add/${customerOrderId}`} className="bg-green-500 text-white py-2 px-4 rounded-md mt-4">
+              Add Item
+            </Link>
+          </div>
+          </div>
           <table className="w-full border-collapse border border-gray-200">
             <thead>
               <tr className="bg-gray-100">
                 <th className="border border-gray-200 px-4 py-2">Product Name</th>
                 <th className="border border-gray-200 px-4 py-2">Quantity</th>
                 <th className="border border-gray-200 px-4 py-2">Price Per Unit</th>
+                <th className="border border-gray-200 px-4 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -97,6 +136,9 @@ const ViewDetails = () => {
                   <td className="border border-gray-200 px-4 py-2">{item.product_name}</td>
                   <td className="border border-gray-200 px-4 py-2">{item.quantity}</td>
                   <td className="border border-gray-200 px-4 py-2">{item.price_per_unit}</td>
+                <td className="border border-gray-200 px-4 py-2">
+                    <button onClick={() => handleRemoveItem(customerOrder.order_item_id)} className="bg-red-500 text-white py-1 px-4 rounded-md mr-2">Remove</button>
+                  </td>
                 </tr>
               ))}
             </tbody>

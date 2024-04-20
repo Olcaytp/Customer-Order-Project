@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 const AddCustomerOrder = () => {
   const [customerName, setCustomerName] = useState('');
@@ -12,8 +13,16 @@ const AddCustomerOrder = () => {
 
   const [showAddItemForm, setShowAddItemForm] = useState(false);
   const [customerOrderId, setCustomerOrderId] = useState(null);
+  
+const [customerNameDirty, setCustomerNameDirty] = useState(false);
+const [addressDirty, setAddressDirty] = useState(false);
+const [orderDateDirty, setOrderDateDirty] = useState(false);
 
   const handleAddCustomerOrder = async () => {
+    if (!customerName || !address || !orderDate) {
+      alert('Please fill in all fields.');
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:8080/customerorder/', {
         customer_name: customerName,
@@ -21,6 +30,7 @@ const AddCustomerOrder = () => {
         order_date: orderDate
       });
       setCustomerOrderId(response.data.customer_order_id);
+      console.log(response.data);
       setShowAddItemForm(true);
     } catch (error) {
       console.error('Error adding customer order:', error);
@@ -35,7 +45,7 @@ const AddCustomerOrder = () => {
         quantity: quantity,
         pricePerUnit: pricePerUnit
       });
-      // Başarı durumunu işle veya başka bir sayfaya yönlendir
+      window.location.href = '/customerorders';
     } catch (error) {
       console.error('Order öğesi eklenirken hata oluştu:', error);
     }
@@ -76,9 +86,11 @@ const AddCustomerOrder = () => {
                   type="text" 
                   placeholder="Customer Name" 
                   value={customerName}
+                  onBlur={() => setCustomerNameDirty(true)}
                   onChange={(e) => setCustomerName(e.target.value)}
                   className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
                 />
+                {customerNameDirty && !customerName && <p className="text-red-500">Customer Name is required</p>}
               </div>
               <div className="w-1/2 pl-2">
                 <label className="block font-semibold">Address:</label>
@@ -86,9 +98,11 @@ const AddCustomerOrder = () => {
                   type="text" 
                   placeholder="Address" 
                   value={address}
+                  onBlur={() => setAddressDirty(true)}
                   onChange={(e) => setAddress(e.target.value)}
                   className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
                 />
+                {addressDirty && !address && <p className="text-red-500">Address is required</p>}
               </div>
             </div>
             <div className="mt-4">
@@ -96,9 +110,11 @@ const AddCustomerOrder = () => {
               <input 
                 type="date" 
                 value={orderDate}
+                onBlur={() => setOrderDateDirty(true)}
                 onChange={(e) => setOrderDate(e.target.value)}
                 className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
               />
+              {orderDateDirty && !orderDate && <p className="text-red-500">Order Date is required</p>}
             </div>
             <div className="flex justify-end items-baseline mt-4">
                 <button 
