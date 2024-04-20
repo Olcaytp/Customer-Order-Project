@@ -21,7 +21,7 @@ function App() {
         <Route path="/edit/:customerOrderId" element={<EditCustomerOrder />} /> {/* customerId parametresi için dinamik yol */}
         <Route path="/orderitems" element={<ListOrderItems />} />
         <Route path="/editorderitem/:orderItemId" element={<EditOrderItem />} />
-        <Route path="/editorderitem/add/:customerOrderId" element={<AddOrderItem />} />
+        <Route path="/orderitem/add/:customerOrderId" element={<AddOrderItem />} />
         </Routes>
     </BrowserRouter>
     </div>

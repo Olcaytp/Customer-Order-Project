@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
 
 const AddCustomerOrder = () => {
   const [customerName, setCustomerName] = useState('');
@@ -29,7 +28,8 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
         address: address,
         order_date: orderDate
       });
-      setCustomerOrderId(response.data.customer_order_id);
+      setCustomerOrderId(response.data.customerOrderId);
+      console.log(response.data.customerOrderId)
       console.log(response.data);
       setShowAddItemForm(true);
     } catch (error) {
@@ -40,10 +40,10 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
   const handleAddOrderItem = async () => {
     try {
       await axios.post(`http://localhost:8080/orderItems/`, {
-        customerId: customerOrderId,
-        productName: productName,
+        customer_order_id: customerOrderId,
+        product_name: productName,
         quantity: quantity,
-        pricePerUnit: pricePerUnit
+        price_per_unit: pricePerUnit,
       });
       window.location.href = '/customerorders';
     } catch (error) {
@@ -126,7 +126,7 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
                 </button>
             </div>
             {showAddItemForm && (
-              <form className="mt-4">
+              <form onSubmit={handleAddOrderItem}  className="mt-4">
                 {/* Add Order Item Form */}
                 <label className="block mt-3 font-semibold">Product Name:</label>
                 <input 
@@ -135,6 +135,7 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
                   value={productName}
                   onChange={(e) => setProductName(e.target.value)}
                   className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
+                  required
                 />
                 <label className="block mt-3 font-semibold">Quantity:</label>
                 <input 
@@ -143,6 +144,7 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
                   value={quantity}
                   onChange={(e) => setQuantity(parseInt(e.target.value))}
                   className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
+                  required
                 />
                 <label className="block mt-3 font-semibold">Price Per Unit:</label>
                 <input 
@@ -151,11 +153,11 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
                   value={pricePerUnit}
                   onChange={(e) => setPricePerUnit(parseInt(e.target.value))}
                   className="border w-full h-10 px-3 mt-2 hover:outline-none focus:outline-none focus:ring-indigo-500 focus:ring-1 rounded-md" 
+                  required
                 />
                 <div className="flex justify-between items-baseline mt-4">
                   <button 
                     type="submit"
-                    onClick={handleAddOrderItem} 
                     className="bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600"
                   >
                     Add Item

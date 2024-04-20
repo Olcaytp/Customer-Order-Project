@@ -3,8 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import "./list-customer.css";
-
 const ListCustomerOrder = () => {
   const [customerorders, setCustomerOrders] = useState([]);
   const apiUrl = "http://localhost:8080/customerorder";
@@ -13,12 +11,12 @@ const ListCustomerOrder = () => {
     const fetchCustomerOrder = async () => {
       try {
         const response = await axios.get(apiUrl);
-        console.log(response.data);
+        //console.log(response.data);
         const modifiedData = response.data.map(customerorder => ({
           ...customerorder,
           order_date: customerorder.order_date.substring(0, customerorder.order_date.indexOf('T'))
         }));
-        console.log('modifiedData', modifiedData);
+        //console.log('modifiedData', modifiedData);
         setCustomerOrders(modifiedData);
       } catch (error) {
         console.error("Error fetching customer data:", error);

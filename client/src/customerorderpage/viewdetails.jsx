@@ -1,26 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import{ useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // useParams hook'unu içe aktar
-import { PDFViewer, Document, Page, Text, View, StyleSheet, PDFDownloadLink  } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, PDFDownloadLink  } from '@react-pdf/renderer';
 import PropTypes from 'prop-types';
 
 // Define styles for the PDF
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    padding: 20,
+    padding: 20
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 10
   },
-  heading: {
-    fontSize: 18,
-    marginBottom: 10,
+  tableHeader: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    paddingBottom: 5,
+    marginBottom: 5
   },
-  label: {
-    fontWeight: 'bold',
+  tableRow: {
+    flexDirection: 'row',
+    marginBottom: 5
   },
+  tableCell: {
+    width: '25%',
+    padding: 5,
+    borderWidth: 1,
+    borderColor: '#000'
+  },
+  headerText: {
+    fontWeight: 'bold'
+  }
 });
 
 const ViewDetails = () => {
@@ -57,21 +70,19 @@ const ViewDetails = () => {
     fetchCustomerOrderDetails();
   }, [customerOrderId]); // customerOrderId dependency array içine eklendi
 
-  const handleRemoveItem = async (itemId) => {
-    try {
-      const isConfirmed = window.confirm("Are you sure you want to remove this item?");
-      if (isConfirmed) {
-        // Öğeyi kaldırma isteği gönder
-        await axios.delete(`http://localhost:8080/orderItems/${itemId}`);
-        // Başarı durumunu işle veya bir güncelleme yap
-        console.log('Item removed successfully:', itemId);
-        // Kaldırılan öğeyi yenilemek için sipariş öğelerini güncelle
-        setOrderItems(orderItems.filter(item => item.order_item_id !== itemId));
+  const handleRemoveItem = async (orderItemId) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this order item?");
+    console.log(orderItemId)
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:8080/orderitems/${orderItemId}`);
+        setOrderItems(orderItems.filter(item => item.order_item_id !== orderItemId));
+      } catch (error) {
+        console.error("Error deleting order item:", error);
       }
-    } catch (error) {
-      console.error('Error removing item:', error);
     }
-  };  
+  };
+  
   
   
   return (
@@ -116,7 +127,7 @@ const ViewDetails = () => {
           <h2 className="text-2xl font-bold mt-8">Order Items</h2>
           <div className="flex justify-end">
           <div className="flex justify-end">
-            <Link to={`/editorderitem/add/${customerOrderId}`} className="bg-green-500 text-white py-2 px-4 rounded-md mt-4">
+            <Link to={`/orderitem/add/${customerOrderId}`} className="bg-green-500 text-white py-2 px-4 rounded-md mt-4">
               Add Item
             </Link>
           </div>
@@ -137,14 +148,14 @@ const ViewDetails = () => {
                   <td className="border border-gray-200 px-4 py-2">{item.quantity}</td>
                   <td className="border border-gray-200 px-4 py-2">{item.price_per_unit}</td>
                 <td className="border border-gray-200 px-4 py-2">
-                    <button onClick={() => handleRemoveItem(customerOrder.order_item_id)} className="bg-red-500 text-white py-1 px-4 rounded-md mr-2">Remove</button>
+                    <button onClick={() => handleRemoveItem(item.order_item_id)} className="bg-red-500 text-white py-1 px-4 rounded-md mr-2">Remove</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-      <PDFDownloadLink document={<ViewDetailsPDF customerOrder={customerOrder} />} fileName="order_details.pdf">
-        {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
+      <PDFDownloadLink document={<ViewDetailsPDF customerOrder={customerOrder} orderItems={orderItems} />} fileName="order_details.pdf">
+        {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
       </PDFDownloadLink>
         </div>
       ) : (
@@ -154,14 +165,38 @@ const ViewDetails = () => {
   );
 };
 
-const ViewDetailsPDF = ({ customerOrder }) => (
+const ViewDetailsPDF = ({ customerOrder, orderItems }) => (
   <Document>
     <Page style={styles.page}>
       <View style={styles.section}>
-        <Text>Customer ID: {customerOrder.customer_order_id} </Text>
-        <Text>Customer Name: {customerOrder.customer_name} </Text>
-        <Text>Address: {customerOrder.address} </Text>
-        <Text>Order Date: {customerOrder.order_date} </Text>
+        <Text style={styles.headerText}>Customer Order Details:</Text>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>Customer ID:</Text>
+          <Text style={styles.tableCell}>{customerOrder.customer_order_id}</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>Customer Name:</Text>
+          <Text style={styles.tableCell}>{customerOrder.customer_name}</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>Address:</Text>
+          <Text style={styles.tableCell}>{customerOrder.address}</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}>Order Date:</Text>
+          <Text style={styles.tableCell}>{customerOrder.order_date}</Text>
+        </View>
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.headerText}>Order Items:</Text>
+        {orderItems.map((item, index) => (
+          <View key={index} style={styles.tableRow}>
+            <Text style={styles.tableCell}>{index + 1}</Text>
+            <Text style={styles.tableCell}>Product Name: {item.product_name}</Text>
+            <Text style={styles.tableCell}>Quantity: {item.quantity}</Text>
+            <Text style={styles.tableCell}>Price Per Unit: {item.price_per_unit}</Text>
+          </View>
+        ))}
       </View>
     </Page>
   </Document>
