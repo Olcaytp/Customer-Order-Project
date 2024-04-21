@@ -76,13 +76,20 @@ The application supports the following CRUD (Create, Read, Update, Delete) opera
 - Create new order item
 - View order item details
 - Delete order item
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-list.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/order-item-list.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-details.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-customer-order.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-item-with-customer.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-new-order-item.png" alt="Create Customer Order" width="200"/>
-<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/update-order-item.png" alt="Create Customer Order" width="200"/>
+
+## Screenshots
+
+<div style="display: flex; flex-wrap: wrap;">
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-list.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/order-item-list.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-details.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-customer-order.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-item-with-customer.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-new-order-item.png" alt="Create Customer Order" width="200"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/update-order-item.png" alt="Create Customer Order" width="200"/>
+</div>
+
+  
 ## PDF Operations
 
 The Customer Order Management System also supports PDF generation for customer orders and order items. Here's how you can utilize this feature:
