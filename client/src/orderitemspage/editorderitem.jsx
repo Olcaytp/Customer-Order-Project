@@ -54,6 +54,22 @@ const EditOrderItem = () => {
 
   return (
     <div className="w-full max-w-lg mx-auto mt-8">
+    <div className="container mx-auto flex justify-between items-center px-4">
+      <header className="bg-gray-800 text-white py-4">
+        <div className="container mx-auto flex justify-center items-center px-4">
+          <nav>
+            <ul className="flex space-x-4">
+              <li>
+                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+              </li>
+              <li>
+                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+    </div>
     <h2 className="text-2xl font-bold mb-4">Edit Order Item</h2>
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
@@ -77,18 +93,6 @@ const EditOrderItem = () => {
         <div className="mb-6">
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onClick={handleUpdate}>Update Order Item</button>
         </div>
-          <div className="container mx-auto flex justify-between items-center px-4">
-            <nav>
-              <ul className="flex space-x-4">
-                <li>
-                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-                </li>
-                <li>
-                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
     </form>
     </div>
   );
