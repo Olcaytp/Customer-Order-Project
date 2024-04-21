@@ -70,13 +70,19 @@ This application includes the following pages:
 
 The application supports the following CRUD (Create, Read, Update, Delete) operations:
 - Create new customer order
-<img src="src/assets/customer-order-list.png" alt="Create Customer Order" width="400"/>
 - View customer order details
 - Edit existing customer order
 - Delete customer order
 - Create new order item
 - View order item details
 - Delete order item
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-list.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/order-item-list.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/customer-order-details.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-customer-order.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-item-with-customer.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-new-order-item.png" alt="Create Customer Order" width="200"/>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/update-order-item.png" alt="Create Customer Order" width="200"/>
 ## PDF Operations
 
 The Customer Order Management System also supports PDF generation for customer orders and order items. Here's how you can utilize this feature:
