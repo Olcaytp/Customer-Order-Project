@@ -12,13 +12,16 @@
   "dependencies": {
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@react-pdf-viewer/core": "^3.12.0",
+    "@react-pdf-viewer/default-layout": "^3.12.0",
     "@react-pdf/renderer": "^3.4.2",
     "axios": "^1.6.8",
     "jspdf": "^2.5.1",
-    "pdfjs-dist": "^4.1.392",
+    "pdfjs-dist": "^3.4.120",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
+    "react-pdf": "^7.7.1",
     "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
