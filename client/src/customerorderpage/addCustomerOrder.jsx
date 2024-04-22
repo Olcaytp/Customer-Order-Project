@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
 
 const AddCustomerOrder = () => {
   const [customerName, setCustomerName] = useState('');
@@ -9,6 +11,7 @@ const AddCustomerOrder = () => {
   const [productName, setProductName] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [pricePerUnit, setPricePerUnit] = useState(0);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   const [showAddItemForm, setShowAddItemForm] = useState(false);
   const [customerOrderId, setCustomerOrderId] = useState(null);
@@ -54,34 +57,47 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
   const handleCancelAddItem = () => {
     setShowAddItemForm(false);
   };
+
+  const handleSignOut = () => {
+    // Kullanıcıyı çıkış yapmış olarak işaretle
+    setIsLoggedIn(false);
+  };
   
   return (
     <div>
       <div>
-      <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <nav>
-          <ul className="flex space-x-4">
-              <li>
-                <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
-              </li>
-              <li>
-                <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
-              </li>
-          </ul>
-          </nav>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-              </li>
-              <li>
-                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+        <header className="bg-gray-800 text-white py-4">
+          <div className="container mx-auto flex justify-between items-center px-4">
+            <nav>
+              <ul className="flex space-x-4">
+                {!isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+                    </li>
+                    <li>
+                      <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <button onClick={handleSignOut} className="text-gray-800">Sign out</button>
+                  </li>
+                )}
+              </ul>
+            </nav>
+            <nav>
+              <ul className="flex space-x-4">
+                <li>
+                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+                </li>
+                <li>
+                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
       </div>
     <div className="relative flex text-gray-800 antialiased flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
       <div className="relative py-3 sm:w-96 mx-auto text-center">

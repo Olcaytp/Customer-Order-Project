@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
 
 const AddOrderItem = () => {
   const { customerOrderId } = useParams(); // Get customer ID from URL
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   const [productName, setProductName] = useState('');
   const [quantity, setQuantity] = useState(0);
@@ -20,7 +23,7 @@ const AddOrderItem = () => {
         quantity: quantity,
         price_per_unit: pricePerUnit,
       });
-      window.location.href = '/customerorder/viewdetails/'+ customerOrderId;
+      window.location.href = '/customerorder/viewCustomerOrderDetails/'+ customerOrderId;
       console.log('New order item created:', response.data);
       console.log(response);
     } catch (error) {
@@ -28,33 +31,46 @@ const AddOrderItem = () => {
     }
   };
 
+  const handleSignOut = () => {
+    // Kullanıcıyı çıkış yapmış olarak işaretle
+    setIsLoggedIn(false);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
     <div>
-      <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <nav>
-          <ul className="flex space-x-4">
-              <li>
-                <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
-              </li>
-              <li>
-                <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
-              </li>
-          </ul>
-          </nav>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-              </li>
-              <li>
-                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+        <header className="bg-gray-800 text-white py-4">
+          <div className="container mx-auto flex justify-between items-center px-4">
+            <nav>
+              <ul className="flex space-x-4">
+                {!isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+                    </li>
+                    <li>
+                      <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <button onClick={handleSignOut} className="text-gray-800">Sign out</button>
+                  </li>
+                )}
+              </ul>
+            </nav>
+            <nav>
+              <ul className="flex space-x-4">
+                <li>
+                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+                </li>
+                <li>
+                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
     </div>
       <h2 className="text-2xl font-bold mb-4">Add New Order Item</h2>
       <form onSubmit={handleSubmit}>

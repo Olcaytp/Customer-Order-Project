@@ -8,34 +8,6 @@ const { generateToken } = require('./config');
 // Middleware
 router.use(express.json());
 
-// Kullanıcı girişi
-router.post('/signin', (req, res) => {
-    const { email, password } = req.body;
-
-    // Kullanıcıyı veritabanından sorgula
-    const sql = 'SELECT * FROM users WHERE email = ?';
-    db.query(sql, [email], async (err, result) => {
-        if (err) {
-            res.status(500).json({ error: 'Internal server error' });
-            throw err;
-        }
-        if (result.length == 0) {
-            res.status(401).json({ error: 'Invalid email or password' });
-        } else {
-            // Kullanıcı bulundu, şimdi parolayı kontrol et
-            const user = result[0];
-            if (password == user.password) {
-                // Parola doğru, kullanıcıya giriş izni ver
-                res.status(200).json({ message: 'Login successful' });
-            } else {
-                // Parola yanlış
-                res.status(401).json({ error: 'Invalid email or password' });
-            }
-        }
-    });
-});
-
-
 // Tüm kullanıcıları listeleme
 router.get('/', (req, res) => {
     const sql = 'SELECT * FROM users';
@@ -49,24 +21,37 @@ router.get('/', (req, res) => {
 });
 
 // Yeni bir kullanıcı oluşturma
-router.post('/', (req, res) => {
-    const { username, email, password, role } = req.body;
-    const sql = 'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)';
-    db.query(sql, [username, email, password, role], (err, result) => {
+router.post('/signup', (req, res) => {
+    const { username, email, password } = req.body;
+    const query = `INSERT INTO users (username, email, password, role) VALUES ('${username}', '${email}', '${password}', 'user')`;
+    db.query(query, (err, result) => {
         if (err) {
             res.status(500).json({ error: 'Internal server error' });
             throw err;
         }
-        res.json({
-            message: 'User added successfully',
-            userId: result.insertId,
-            username: username,
-            email: email,
-            role: role
-        });
-
+        res.status(201).json({ message: 'User created successfully' });
     });
 });
+
+
+
+// Kullanıcı girişi
+router.post('/signin', (req, res) => {
+    const { email, password } = req.body;
+    const query = `SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`;
+    db.query(query, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: 'Internal server error' });
+            throw err;
+        }
+        if (results.length > 0) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ error: 'Invalid email or password' });
+        }
+    });
+});
+
 
 // Belirli bir kullanıcıyı güncelleme
 router.put('/:userId', (req, res) => {

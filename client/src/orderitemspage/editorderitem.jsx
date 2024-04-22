@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
 
 
 import '../App.css'
@@ -13,6 +15,7 @@ const EditOrderItem = () => {
     quantity: '',
     pricePerUnit: ''
   });
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOrderItemDetails = async () => {
@@ -52,23 +55,47 @@ const EditOrderItem = () => {
     console.log(orderItem);
   };
 
+  const handleSignOut = () => {
+    // Kullanıcıyı çıkış yapmış olarak işaretle
+    setIsLoggedIn(false);
+    console.log(isLoggedIn);
+  };
+
   return (
     <div className="w-full max-w-lg mx-auto mt-8">
     <div className="container mx-auto flex justify-between items-center px-4">
-      <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-center items-center px-4">
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-              </li>
-              <li>
-                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+        <header className="bg-gray-800 text-white py-4">
+          <div className="container mx-auto flex justify-between items-center px-2">
+            <nav>
+              <ul className="flex space-x-4">
+                {!isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+                    </li>
+                    <li>
+                      <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <button onClick={handleSignOut} className="text-gray-800">Sign out</button>
+                  </li>
+                )}
+              </ul>
+            </nav>
+            <nav>
+              <ul className="flex space-x-4">
+                <li>
+                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+                </li>
+                <li>
+                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
     </div>
     <h2 className="text-2xl font-bold mb-4">Edit Order Item</h2>
     <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">

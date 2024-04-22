@@ -15,20 +15,22 @@ const HomePage = () => {
             <div className="mr-6">
             <h3 className="text-3xl font-semibold mb-2">Customer Orders:</h3>
             <ul className="text-gray-700 text-3xl">
-                <li>View All Customer Orders</li>
-                <li>Add a New Customer Order</li>
-                <li>Edit a Customer Order</li>
-                <li>Delete a Customer Order</li>
-                <li>Generate a PDF Dynamically</li>
+                <li>- View All Customer Orders</li>
+                <li>- Add a New Customer Order</li>
+                <li>- Edit a Customer Order</li>
+                <li>- Delete a Customer Order</li>
+                <li>- Generate a PDF Dynamically</li>
+                <li>- Authentication and authorization features to</li>
+                <li>secure access to PDF generation/viewing.</li>
             </ul>
             </div>
             <div>
             <h3 className="text-3xl font-semibold mb-2">Order Items:</h3>
             <ul className="text-gray-700 text-3xl">
-                <li>View All Order Items</li>
-                <li>Add a New Order Item</li>
-                <li>Edit an Order Item</li>
-                <li>Delete an Order Item</li>
+                <li>- View All Order Items</li>
+                <li>- Add a New Order Item</li>
+                <li>- Edit an Order Item</li>
+                <li>- Delete an Order Item</li>
             </ul>
             </div>
         </div>

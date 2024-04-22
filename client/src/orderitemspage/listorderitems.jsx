@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination from './pagination'; 
+import { UserContext } from '../context/UserContext';
+import { useContext } from 'react';
 
 const ListOrderItems = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
   useEffect(() => {
     const fetchOrderItems = async () => {
@@ -44,6 +47,11 @@ const ListOrderItems = () => {
     setCurrentPage(currentPage - 1);
   };
 
+  const handleSignOut = () => {
+    // Kullanıcıyı çıkış yapmış olarak işaretle
+    setIsLoggedIn(false);
+  };
+
   // Current items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -52,30 +60,38 @@ const ListOrderItems = () => {
   return (
     <div>
       <div>
-      <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <nav>
-          <ul className="flex space-x-4">
-              <li>
-                <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
-              </li>
-              <li>
-                <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
-              </li>
-          </ul>
-          </nav>
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-              </li>
-              <li>
-                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+        <header className="bg-gray-800 text-white py-4">
+          <div className="container mx-auto flex justify-between items-center px-2">
+            <nav>
+              <ul className="flex space-x-4">
+                {!isLoggedIn ? (
+                  <>
+                    <li>
+                      <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+                    </li>
+                    <li>
+                      <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <button onClick={handleSignOut} className="text-gray-800">Sign out</button>
+                  </li>
+                )}
+              </ul>
+            </nav>
+            <nav>
+              <ul className="flex space-x-4">
+                <li>
+                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+                </li>
+                <li>
+                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
       </div>
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl mb-4">Order Items List</h1>

@@ -1,15 +1,39 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const SignIn = () => {
-    const [isLoggeedIn, setIsLoggedIn] = useState('')
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Giriş işlemleri burada gerçekleştirilebilir
-    setIsLoggedIn(true);
-    console.log(e.target)
-    window.location.href="/customerOrders";
-  };
+  const { isLoggedIn,setIsLoggedIn } = useContext(UserContext);
+  console.log(isLoggedIn);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const email = formData.get("email");
+        const password = formData.get("password");
+
+        try {
+            const response = await fetch("http://localhost:8080/users/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                console.log(response)
+                setIsLoggedIn(true);
+                console.log(isLoggedIn)
+                window.location.href = "/customerOrders";
+            } else {
+                const errorData = await response.json();
+                console.error("Error signing in:", errorData.error);
+            }
+        } catch (error) {
+            console.error("An error occurred while signing in:", error);
+        }
+    };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
