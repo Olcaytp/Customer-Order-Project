@@ -65,6 +65,8 @@ This application includes the following pages:
 - Customer Order Details
 - Edit Customer Order
 - Create Customer Order with Multiple Items
+- Welcome Page
+- Signin & Sign Up Pages
 
 ## CRUD Operations
 
@@ -76,6 +78,7 @@ The application supports the following CRUD (Create, Read, Update, Delete) opera
 - Create new order item
 - View order item details
 - Delete order item
+- Create PDF dynamically and download
 
 ## Screenshots
 
@@ -88,6 +91,8 @@ The application supports the following CRUD (Create, Read, Update, Delete) opera
     <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-item-with-customer.png" alt="Create Customer Order" width="300"/>
     <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-new-order-item.png" alt="Create Customer Order" width="300"/>
     <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/update-order-item.png" alt="Create Customer Order" width="300"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/authenticated-page.png" alt="Create Customer Order" width="300"/>
+    <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/welcome-page.png" alt="Create Customer Order" width="300"/>
 </div>
 <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/dynamic-pdf-create.png" alt="Create Customer Order" width="300"/>
 </div>
