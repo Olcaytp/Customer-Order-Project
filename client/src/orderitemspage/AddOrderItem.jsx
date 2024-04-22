@@ -32,7 +32,17 @@ const AddOrderItem = () => {
     <div className="container mx-auto px-4 py-8">
     <div>
       <header className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto flex justify-center items-center px-4">
+        <div className="container mx-auto flex justify-between items-center px-4">
+          <nav>
+          <ul className="flex space-x-4">
+              <li>
+                <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+              </li>
+          </ul>
+          </nav>
           <nav>
             <ul className="flex space-x-4">
               <li>

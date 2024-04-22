@@ -52,21 +52,30 @@ const ListOrderItems = () => {
   return (
     <div>
       <div>
-        <header className="bg-gray-800 text-white py-4">
-          <div className="container mx-auto flex justify-between items-center px-4">
-            <h1 className="text-xl font-bold">My App</h1>
-            <nav>
-              <ul className="flex space-x-4">
-                <li>
-                  <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
-                </li>
-                <li>
-                  <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </header>
+      <header className="bg-gray-800 text-white py-4">
+        <div className="container mx-auto flex justify-between items-center px-4">
+          <nav>
+          <ul className="flex space-x-4">
+              <li>
+                <Link to="/signin" className="hover:text-gray-300">Sign in</Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:text-gray-300">Sign up</Link>
+              </li>
+          </ul>
+          </nav>
+          <nav>
+            <ul className="flex space-x-4">
+              <li>
+                <Link to="/customerOrders" className="hover:text-gray-300">List Customer Orders</Link>
+              </li>
+              <li>
+                <Link to="/orderitems" className="hover:text-gray-300">List Order Items</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </header>
       </div>
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl mb-4">Order Items List</h1>
