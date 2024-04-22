@@ -89,6 +89,8 @@ The application supports the following CRUD (Create, Read, Update, Delete) opera
     <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/add-new-order-item.png" alt="Create Customer Order" width="300"/>
     <img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/update-order-item.png" alt="Create Customer Order" width="300"/>
 </div>
+<img src="https://github.com/Olcaytp/Customer-Order-Project/blob/main/client/src/assets/dynamic-pdf-create.png" alt="Create Customer Order" width="300"/>
+</div>
 
 ## PDF Operations
 
