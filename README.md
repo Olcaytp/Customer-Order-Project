@@ -56,6 +56,7 @@ To run the frontend application, navigate to the `frontend` directory and run th
 The Customer Order Management System uses MySQL as its database. It consists of the following schemas:
 - customer_orders
 - orderItems
+- users table with roles
 
 ## Pages
 
@@ -106,17 +107,7 @@ The Customer Order Management System also supports PDF generation for customer o
 To generate a PDF document for a customer order or order items, follow these steps:
 
 - Navigate to the Customer Order Details page or Order Items page in the application by clicking the view button.
-- Once you're on the desired page, locate the "Download PDF" button.
-- Click on the "Download PDF" button to initiate the PDF generation process.
+- Click on the "Create PDF Dynamically" button to initiate the PDF generation process.
 - The application will generate the PDF document based on the displayed information.
-- Once the PDF generation is complete, a download link will be provided.
-- Click on the download link to save the generated PDF document to your local machine.
-
-
-## Contribution
-
-Contributions to this project are welcome. Please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
+- Once the PDF generation is complete, a generate pdf button will be provided.
+- Click on the generate pdf button to save the generated PDF document to your local machine.
