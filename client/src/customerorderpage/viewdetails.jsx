@@ -2,45 +2,15 @@ import{ useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // useParams hook'unu içe aktar
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink  } from '@react-pdf/renderer';
-import PropTypes from 'prop-types';
+import DynamicPDFDocument from './dynamicPdfDocument.jsx';
 
-// Define styles for the PDF
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    padding: 20
-  },
-  section: {
-    marginBottom: 10
-  },
-  tableHeader: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
-    paddingBottom: 5,
-    marginBottom: 5
-  },
-  tableRow: {
-    flexDirection: 'row',
-    marginBottom: 5
-  },
-  tableCell: {
-    width: '25%',
-    padding: 5,
-    borderWidth: 1,
-    borderColor: '#000'
-  },
-  headerText: {
-    fontWeight: 'bold'
-  }
-});
 
 const ViewDetails = () => {
   const { customerOrderId } = useParams(); // URL'den müşteri ID'sini al
 
   const [customerOrder, setCustomerOrder] = useState({}); // Başlangıç değeri boş bir nesne
   const [orderItems, setOrderItems] = useState([]); // Sipariş öğeleri için başlangıç değeri boş bir dizi
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const fetchCustomerOrderDetails = async () => { // customerOrderId parametresi kaldırıldı
@@ -82,8 +52,10 @@ const ViewDetails = () => {
       }
     }
   };
-  
-  
+
+  const handleGeneratePDF = () => {
+    setShowForm(!showForm);
+  }; 
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -154,56 +126,16 @@ const ViewDetails = () => {
               ))}
             </tbody>
           </table>
-      <PDFDownloadLink document={<ViewDetailsPDF customerOrder={customerOrder} orderItems={orderItems} />} fileName="order_details.pdf">
-        {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
-      </PDFDownloadLink>
-        </div>
+            <button onClick={() => handleGeneratePDF()} className="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">
+            {showForm ? 'Hide PDF' : 'Create PDF Dynamically'}
+            </button>
+          {showForm && <DynamicPDFDocument customerOrder={customerOrder} orderItems={orderItems} />}
+  </div>
       ) : (
         <p>Loading...</p>
       )}
     </div>
   );
-};
-
-const ViewDetailsPDF = ({ customerOrder, orderItems }) => (
-  <Document>
-    <Page style={styles.page}>
-      <View style={styles.section}>
-        <Text style={styles.headerText}>Customer Order Details:</Text>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Customer ID:</Text>
-          <Text style={styles.tableCell}>{customerOrder.customer_order_id}</Text>
-        </View>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Customer Name:</Text>
-          <Text style={styles.tableCell}>{customerOrder.customer_name}</Text>
-        </View>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Address:</Text>
-          <Text style={styles.tableCell}>{customerOrder.address}</Text>
-        </View>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}>Order Date:</Text>
-          <Text style={styles.tableCell}>{customerOrder.order_date}</Text>
-        </View>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.headerText}>Order Items:</Text>
-        {orderItems.map((item, index) => (
-          <View key={index} style={styles.tableRow}>
-            <Text style={styles.tableCell}>{index + 1}</Text>
-            <Text style={styles.tableCell}>Product Name: {item.product_name}</Text>
-            <Text style={styles.tableCell}>Quantity: {item.quantity}</Text>
-            <Text style={styles.tableCell}>Price Per Unit: {item.price_per_unit}</Text>
-          </View>
-        ))}
-      </View>
-    </Page>
-  </Document>
-);
-
-ViewDetailsPDF.propTypes = {
-  customerOrder: PropTypes.object.isRequired,
 };
 
 export default ViewDetails;
