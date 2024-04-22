@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Pagination from './pagination'; 
 
 const ListOrderItems = () => {
   const [orderItems, setOrderItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
   useEffect(() => {
     const fetchOrderItems = async () => {
@@ -30,6 +33,21 @@ const ListOrderItems = () => {
       }
     }
   };
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  // Current items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = orderItems.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div>
@@ -64,7 +82,7 @@ const ListOrderItems = () => {
           </tr>
         </thead>
         <tbody>
-          {orderItems.map(item => (
+          {currentItems.map(item => (
             <tr key={item.order_item_id} className="border-b hover:bg-orange-100">
               <td className="p-3 px-5">{item.order_item_id}</td>
               <td className="p-3 px-5">{item.customer_order_id}</td>
@@ -79,7 +97,15 @@ const ListOrderItems = () => {
           ))}
         </tbody>
       </table>
-    </div>
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={orderItems.length}
+          paginate={paginate}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
+      </div>
     </div>
   );
 };

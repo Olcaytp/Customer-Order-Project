@@ -2,9 +2,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Pagination from './pagination'; 
 
 const ListCustomerOrder = () => {
   const [customerorders, setCustomerOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ordersPerPage] = useState(5);
+
   const apiUrl = "http://localhost:8080/customerorder";
 
   useEffect(() => {
@@ -38,6 +42,21 @@ const ListCustomerOrder = () => {
     }
   };
 
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage - 1);
+  };
+
+  // Current items
+  const indexOfLastItem = currentPage * ordersPerPage;
+  const indexOfFirstItem = indexOfLastItem - ordersPerPage;
+  const currentOrders = customerorders.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div>
       <div>
@@ -70,7 +89,7 @@ const ListCustomerOrder = () => {
           </tr>
         </thead>
         <tbody>
-          {customerorders.map((customerorder) => (
+          {currentOrders.map((customerorder) => (
             <tr key={customerorder.customer_order_id}>
               <td className="border border-gray-200 px-4 py-2">
                 {customerorder.customer_order_id}
@@ -103,6 +122,14 @@ const ListCustomerOrder = () => {
           ))}
         </tbody>
       </table>
+        <Pagination
+          currentPage={currentPage}
+          ordersPerPage={ordersPerPage}
+          totalOrders={customerorders.length}
+          paginate={paginate}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
       <button className=" text-white font-bold py-1 px-2 rounded mt-5">
       <Link to="/customerOrders/add" className="bg-green-500 text-white font-bold py-2 px-4 rounded">
         Add Customer Order
