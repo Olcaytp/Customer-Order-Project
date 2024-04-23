@@ -8,12 +8,10 @@ const SignUp = () => {
       const username = formData.get('username');
       const email = formData.get('email');
       const password = formData.get('password');
-      const role = 'user'; // Default olarak kullanıcı rolü atandı, isteğe bağlı olarak değiştirilebilir
+      const role = 'user';
   
       try {
-        // Kullanıcı bilgilerini sunucuya gönder
         const response = await axios.post('http://localhost:8080/users/signup', { username, email, password, role });
-        // Kullanıcı başarıyla kaydedildiğinde ListCustomerOrder sayfasına yönlendir
         window.location.href = '/signin';
       } catch (error) {
         console.error('Error creating user:', error);

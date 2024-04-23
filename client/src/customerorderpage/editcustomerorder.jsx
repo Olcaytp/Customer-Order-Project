@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router-dom'; // useParams hook'unu içe aktar
+import { useParams } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 
 const EditCustomerOrder = () => {
-  const { customerOrderId } = useParams(); // URL'den müşteri ID'sini al
+  const { customerOrderId } = useParams(); 
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
 
-  const [formData, setFormData] = useState({}); // Form verileri için başlangıç değeri boş bir nesne
-  const [orderItems, setOrderItems] = useState([]); // Sipariş öğeleri için başlangıç değeri boş bir dizi
-
+  const [formData, setFormData] = useState({}); 
+  const [orderItems, setOrderItems] = useState([]); 
   useEffect(() => {
     const fetchCustomerOrderDetails = async () => {
       try {
-        // Müşteri siparişi detaylarını getir
+        // Fetched customer order details
         const response = await axios.get(`http://localhost:8080/customerorder/${customerOrderId}`);
         const modifiedData = {
           ...response.data,
@@ -23,9 +22,8 @@ const EditCustomerOrder = () => {
         };
         setFormData(modifiedData);
 
-        // Tüm sipariş öğelerini getir
+        //Fetch the customer order items
         const itemsResponse = await axios.get(`http://localhost:8080/orderitems`);
-        // Sadece mevcut müşteri siparişi ID'sine sahip olanları filtrele
         const filteredItems = itemsResponse.data.filter(item => item.customer_order_id == customerOrderId);
         setOrderItems(filteredItems);
       } catch (error) {
@@ -46,9 +44,7 @@ const EditCustomerOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Müşteri siparişini güncelle
       await axios.put(`http://localhost:8080/customerorder/${customerOrderId}`, formData);
-      // Başarılı güncelleme işlemi mesajı veya yönlendirme yapılabilir
       window.location.href = '/customerorders';
     } catch (error) {
       console.error('Error updating customer order:', error);
@@ -56,7 +52,6 @@ const EditCustomerOrder = () => {
   };
 
   const handleSignOut = () => {
-    // Kullanıcıyı çıkış yapmış olarak işaretle
     setIsLoggedIn(false);
   };
 
@@ -114,7 +109,6 @@ const EditCustomerOrder = () => {
             </div>
             <button type="submit" className="mt-4 bg-purple-500 text-white py-2 px-6 rounded-md hover:bg-purple-600">Update Customer Order</button>
           </form>
-          {/* Sipariş öğeleri tablosu */}
           <h2 className="text-2xl font-bold mt-8">Order Items</h2>
           <table className="w-full border-collapse border border-gray-200">
             <thead>

@@ -5,25 +5,25 @@ import jsPDF from "jspdf";
 const PdfViewer = ({ pdfUrl }) => {
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
 
-    // Aynı PDF'i üretmek için bir fonksiyon
-    const generateSamePDF = () => {
-        // Yeni bir jsPDF örneği oluşturuluyor
-        const doc = new jsPDF();
+    // Function to generate the same PDF
+const generateSamePDF = () => {
+    // Creating a new instance of jsPDF
+    const doc = new jsPDF();
 
-        // Fatura başlığı ekleniyor
-        doc.setFontSize(24);
-        doc.text("Invoice PDF", 40,10);
-        doc.setFontSize(10);
-        doc.text("Date: " + new Date().toDateString(), 40, 20);
+    // Adding the invoice title
+    doc.setFontSize(24);
+    doc.text("Invoice PDF", 40, 10);
+    doc.setFontSize(10);
+    doc.text("Date: " + new Date().toDateString(), 40, 20);
 
-        // Ürünler bölümü ekleniyor
-        doc.setFontSize(14);
-        doc.text("Items:", 40, 40);
-        doc.line(40, 45, 200, 45);
+    // Adding the items section
+    doc.setFontSize(14);
+    doc.text("Items:", 40, 40);
+    doc.line(40, 45, 200, 45);
 
-        // Oluşturulan PDF dosyası "invoice.pdf" olarak kaydediliyor
-        doc.save("invoice_same.pdf");
-    };
+    // Saving the generated PDF file as "invoice_same.pdf"
+    doc.save("invoice_same.pdf");
+};
 
     return (
         <div>

@@ -47,7 +47,6 @@ const ListOrderItems = () => {
   };
 
   const handleSignOut = () => {
-    // Kullanıcıyı çıkış yapmış olarak işaretle
     setIsLoggedIn(false);
   };
 

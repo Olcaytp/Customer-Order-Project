@@ -7,15 +7,15 @@ import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 
 const ViewDetails = () => {
-  const { customerOrderId } = useParams(); // URL'den müşteri ID'sini al
-  const [customerOrder, setCustomerOrder] = useState({}); // Başlangıç değeri boş bir nesne
-  const [orderItems, setOrderItems] = useState([]); // Sipariş öğeleri için başlangıç değeri boş bir dizi
+  const { customerOrderId } = useParams();
+  const [customerOrder, setCustomerOrder] = useState({});
+  const [orderItems, setOrderItems] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    const fetchCustomerOrderDetails = async () => { // customerOrderId parametresi kaldırıldı
+    const fetchCustomerOrderDetails = async () => { 
       try {
-        // Müşteri siparişi detaylarını getir
+        // Fetch customer order details
         const response = await axios.get(`http://localhost:8080/customerorder/${customerOrderId}`);
         const modifiedData = {
           ...response.data,
@@ -23,10 +23,10 @@ const ViewDetails = () => {
         };
         setCustomerOrder(modifiedData);
   
-        // Tüm sipariş öğelerini getir
+        // Fetch customer order items
         const itemsResponse = await axios.get(`http://localhost:8080/orderitems`);
   
-        // Sadece mevcut müşteri siparişi ID'sine sahip olanları filtrele
+        
         const filteredItems = itemsResponse.data.filter(item => item.customer_order_id == customerOrderId);
         setOrderItems(filteredItems);
       } catch (error) {
@@ -35,11 +35,10 @@ const ViewDetails = () => {
     };
     
     fetchCustomerOrderDetails();
-  }, [customerOrderId]); // customerOrderId dependency array içine eklendi
+  }, [customerOrderId]);
   const context = useContext(UserContext);
 
   const handleSignOut = () => {
-    // Kullanıcıyı çıkış yapmış olarak işaretle
     context.setIsLoggedIn(false);
   };
 

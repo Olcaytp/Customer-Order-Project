@@ -37,7 +37,7 @@ const EditOrderItem = () => {
   
 
   const handleUpdate = async (e) => {
-    e.preventDefault(); // Formun varsayılan davranışını engelle
+    e.preventDefault();
     try {
       const response = await axios.put(`http://localhost:8080/orderitems/${orderItemId}`, orderItem);
       window.location.href = '/orderitems';
@@ -54,7 +54,6 @@ const EditOrderItem = () => {
   };
 
   const handleSignOut = () => {
-    // Kullanıcıyı çıkış yapmış olarak işaretle
     setIsLoggedIn(false);
   };
 
