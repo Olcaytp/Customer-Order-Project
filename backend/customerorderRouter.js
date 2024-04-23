@@ -2,12 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
-const db = require('./db'); // db bağlantısı
+const db = require('./db'); // Database connection
 
 // Middleware
 router.use(express.json());
 
-// Tüm müşteri orderlarini al
+// Get all customer orders
 router.get('/', (req, res) => {
     const sql = "SELECT * FROM CustomerOrder";
     db.query(sql, (err, result) => {
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// Belirli bir müşteri orderi id'ye göre al
+// Get a specific customer order by ID
 router.get('/:customerOrderId', (req, res) => {
     const customerOrderId = req.params.customerOrderId;
     const sql = 'SELECT * FROM CustomerOrder WHERE customer_order_id = ?';
@@ -36,7 +36,7 @@ router.get('/:customerOrderId', (req, res) => {
     });
 });
 
-// Yeni bir müşteri order oluştur
+// Create a new customer order
 router.post('/', (req, res) => {
     const { customer_name, address, order_date } = req.body;
     const sql = "INSERT INTO CustomerOrder (customer_name, address, order_date) VALUES (?, ?, ?)";
@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// Var olan bir müşteri prderini güncelle
+// Update an existing customer order
 router.put('/:customerOrderId', (req, res) => {
     const customerOrderId = req.params.customerOrderId;
     const { customer_name, address, order_date } = req.body;
@@ -67,7 +67,7 @@ router.put('/:customerOrderId', (req, res) => {
     });
 });
 
-// Var olan bir müşteri orderini sil
+// Delete an existing customer order
 router.delete('/:customerOrderId', (req, res) => {
     const customerOrderId = req.params.customerOrderId;
     const sql = "DELETE FROM CustomerOrder WHERE customer_order_id = ?";

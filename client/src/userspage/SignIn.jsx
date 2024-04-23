@@ -4,7 +4,6 @@ import { UserContext } from '../context/UserContext';
 
 const SignIn = () => {
   const { isLoggedIn,setIsLoggedIn } = useContext(UserContext);
-  console.log(isLoggedIn);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,9 +21,7 @@ const SignIn = () => {
             });
 
             if (response.ok) {
-                console.log(response)
                 setIsLoggedIn(true);
-                console.log(isLoggedIn)
                 window.location.href = "/customerOrders";
             } else {
                 const errorData = await response.json();

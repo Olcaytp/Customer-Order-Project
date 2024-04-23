@@ -16,7 +16,6 @@ const ListOrderItems = () => {
       try {
         const response = await axios.get('http://localhost:8080/orderitems');
         setOrderItems(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error('Error fetching order items:', error);
       }

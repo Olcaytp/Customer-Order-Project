@@ -17,7 +17,6 @@ const EditCustomerOrder = () => {
       try {
         // Müşteri siparişi detaylarını getir
         const response = await axios.get(`http://localhost:8080/customerorder/${customerOrderId}`);
-        console.log(response.data);
         const modifiedData = {
           ...response.data,
           order_date: response.data.order_date.substring(0, response.data.order_date.indexOf('T'))
@@ -26,11 +25,8 @@ const EditCustomerOrder = () => {
 
         // Tüm sipariş öğelerini getir
         const itemsResponse = await axios.get(`http://localhost:8080/orderitems`);
-        //console.log(itemsResponse.data);
-
         // Sadece mevcut müşteri siparişi ID'sine sahip olanları filtrele
         const filteredItems = itemsResponse.data.filter(item => item.customer_order_id == customerOrderId);
-        console.log(filteredItems);
         setOrderItems(filteredItems);
       } catch (error) {
         console.error('Error fetching customer details:', error);

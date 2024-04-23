@@ -11,7 +11,6 @@ const ListCustomerOrder = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersPerPage] = useState(5);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
-  console.log(isLoggedIn);
 
   const apiUrl = "http://localhost:8080/customerorder";
 
@@ -19,12 +18,10 @@ const ListCustomerOrder = () => {
     const fetchCustomerOrder = async () => {
       try {
         const response = await axios.get(apiUrl);
-        //console.log(response.data);
         const modifiedData = response.data.map(customerorder => ({
           ...customerorder,
           order_date: customerorder.order_date.substring(0, customerorder.order_date.indexOf('T'))
         }));
-        //console.log('modifiedData', modifiedData);
         setCustomerOrders(modifiedData);
       } catch (error) {
         console.error("Error fetching customer data:", error);

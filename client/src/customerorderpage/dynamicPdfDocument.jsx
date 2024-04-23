@@ -25,16 +25,13 @@ function DynamicPDFDocument() {
         // Replace with your actual API endpoint to fetch customer data
         const customerResponse = await fetch(`http://localhost:8080/customerorder/${customerOrderId}`);
         const customerData = await customerResponse.json();
-        console.log(customerData);
         setCustomerName(customerData.customer_name);
         setCustomerAddress(customerData.address);
 
         // Tüm sipariş öğelerini getir
         const itemsResponse = await axios.get(itemApiUrl);
-        console.log(itemsResponse);
         // Sadece mevcut müşteri siparişi ID'sine sahip olanları filtrele
         const filteredItems = itemsResponse.data.filter(item => item.customer_order_id == customerOrderId);
-        //console.log('filteredItems', filteredItems);
         setItems(filteredItems);
       } catch (error) {
         console.error('Error fetching data:', error);

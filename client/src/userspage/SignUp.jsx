@@ -13,8 +13,6 @@ const SignUp = () => {
       try {
         // Kullanıcı bilgilerini sunucuya gönder
         const response = await axios.post('http://localhost:8080/users/signup', { username, email, password, role });
-        console.log(response.data); // Yeni kullanıcı verilerini konsolda göster
-  
         // Kullanıcı başarıyla kaydedildiğinde ListCustomerOrder sayfasına yönlendir
         window.location.href = '/signin';
       } catch (error) {

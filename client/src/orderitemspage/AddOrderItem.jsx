@@ -23,7 +23,7 @@ const AddOrderItem = () => {
         quantity: quantity,
         price_per_unit: pricePerUnit,
       });
-      window.location.href = '/customerorder/viewCustomerOrderDetails/'+ customerOrderId;
+      window.location.href = '/customerorder/viewCustomerOrderDetails/:'+ customerOrderId;
       console.log('New order item created:', response.data);
       console.log(response);
     } catch (error) {
@@ -32,7 +32,6 @@ const AddOrderItem = () => {
   };
 
   const handleSignOut = () => {
-    // Kullanıcıyı çıkış yapmış olarak işaretle
     setIsLoggedIn(false);
   };
 

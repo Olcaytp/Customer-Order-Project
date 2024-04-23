@@ -32,8 +32,6 @@ const [orderDateDirty, setOrderDateDirty] = useState(false);
         order_date: orderDate
       });
       setCustomerOrderId(response.data.customerOrderId);
-      console.log(response.data.customerOrderId)
-      console.log(response.data);
       setShowAddItemForm(true);
     } catch (error) {
       console.error('Error adding customer order:', error);

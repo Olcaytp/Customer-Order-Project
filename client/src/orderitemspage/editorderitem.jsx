@@ -40,7 +40,6 @@ const EditOrderItem = () => {
     e.preventDefault(); // Formun varsayılan davranışını engelle
     try {
       const response = await axios.put(`http://localhost:8080/orderitems/${orderItemId}`, orderItem);
-      console.log(response.data); // Başarılı yanıtı işle
       window.location.href = '/orderitems';
     } catch (error) {
       console.error('Error updating order item:', error);
@@ -52,13 +51,11 @@ const EditOrderItem = () => {
       ...orderItem,
       [e.target.name]: e.target.value
     });
-    console.log(orderItem);
   };
 
   const handleSignOut = () => {
     // Kullanıcıyı çıkış yapmış olarak işaretle
     setIsLoggedIn(false);
-    console.log(isLoggedIn);
   };
 
   return (

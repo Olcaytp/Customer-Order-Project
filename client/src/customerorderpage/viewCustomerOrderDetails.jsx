@@ -17,7 +17,6 @@ const ViewDetails = () => {
       try {
         // Müşteri siparişi detaylarını getir
         const response = await axios.get(`http://localhost:8080/customerorder/${customerOrderId}`);
-        //console.log(response.data);
         const modifiedData = {
           ...response.data,
           order_date: response.data.order_date.substring(0, response.data.order_date.indexOf('T'))
@@ -26,11 +25,9 @@ const ViewDetails = () => {
   
         // Tüm sipariş öğelerini getir
         const itemsResponse = await axios.get(`http://localhost:8080/orderitems`);
-        //console.log('itemsResponse', itemsResponse.data);
   
         // Sadece mevcut müşteri siparişi ID'sine sahip olanları filtrele
         const filteredItems = itemsResponse.data.filter(item => item.customer_order_id == customerOrderId);
-        //console.log('filteredItems', filteredItems);
         setOrderItems(filteredItems);
       } catch (error) {
         console.error('Error fetching customer details:', error);
@@ -40,17 +37,14 @@ const ViewDetails = () => {
     fetchCustomerOrderDetails();
   }, [customerOrderId]); // customerOrderId dependency array içine eklendi
   const context = useContext(UserContext);
-  console.log(context.isLoggedIn);
 
   const handleSignOut = () => {
     // Kullanıcıyı çıkış yapmış olarak işaretle
     context.setIsLoggedIn(false);
-    console.log(context.isLoggedIn);
   };
 
   const handleRemoveItem = async (orderItemId) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this order item?");
-    console.log(orderItemId)
     if (isConfirmed) {
       try {
         await axios.delete(`http://localhost:8080/orderitems/${orderItemId}`);
